@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Laravel4 vs. Symfony2</title>
+
+        <meta name="description" content="Laravel">
+        <meta name="author" content="Tautvilas Mečinskas">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                <h1>Laravel4 vs. Symfony2</h1>
+                <h3 style="padding-top: 10px">Which one to choose?</h3>
+                <p>
+                <small>Created by Tautvilas Mečinskas</small>
+                </p>
+                <p>
+                <small>Powered by <a href="http://lab.hakim.se/reveal-js/">reveal.js</a></small>
+                </p>
+                <p>2013 10</p>
+                </section>
+
+                <section>
+                <h2>Why this talk?</h2>
+                <h3 class="fragment roll-in">Framework choice matters.</h3>
+                </section>
+
+                <section>
+                <h2>About me</h2>
+                <ul>
+                    <li>First php program 10 years ago</li>
+                    <li>Since then developed in PHP, Java, Python and Javascript</li>
+                    <li>For the Last 2 years developed mainly in PHP</li>
+                    <li>Used mainly laravel3/4 and symfony2.0-2.3 in client projects</li>
+                </ul>
+                </section>
+
+                <section>
+                <h2>Laravel</h2>
+                <blockquote>&ldquo;The elegant php framework for web artisans&rdquo;</blockquote>
+                <ul class="fragment">
+                    <li>Appeared in June 2011</li>
+                    <li>Laravel4 released in May 2013</li>
+                    <li>Laravel4 is not much different from Laravel3</li>
+                    <li>Created by Taylor Otwell</li>
+                    <li>Sponsored by several companies</li>
+                    <li>152 contributors on github &amp; ~2500 commits</li>
+                </ul>
+
+                </section>
+
+                <section>
+                <h2>Symfony</h2>
+                <blockquote>&ldquo;High Performance PHP Framework for Web Development&rdquo;</blockquote>
+                <ul class="fragment">
+                    <li>Appeared in October 2005</li>
+                    <li>Symfony2 released in July 2011</li>
+                    <li>Symfony2 is completely different from Symfony</li>
+                    <li>Created by Fabien Potencier</li>
+                    <li>Developed by Sensio Labs</li>
+                    <li>771 contributors on github &amp; 10,000+ commits</li>
+                </ul>
+                </section>
+
+                <section>
+                <h2>Laravel4 and Symfony2 similarities</h2>
+                <ul>
+                    <li>PHP 5.3 frameworks for web applications</li>
+                    <li>Dependencies managed with <a href="http://getcomposer.org">Composer</a></li>
+                    <li>Laravel4 uses several Symfony2 core components</li>
+                    <li>Both have command-line tools</li>
+                    <li>Both use Dependency Injection</li>
+                </ul>
+                </section>
+
+                <section>
+                <h2>Installation</h2>
+                    <p>Laravel4:</p>
+                    <pre><code>
+composer create-project laravel/laravel --prefer-dist
+                    </code></pre>
+                    <p>Symfony2:</p>
+                    <pre><code>
+composer create-project symfony/framework-standard-edition path/ 2.3.5
+                    </code></pre>
+                </section>
+
+                <section>
+                <h2>Configuration</h2>
+                <h3>Laravel4</h3>
+		        <pre><code data-trim>
+return array(
+    'default' => 'mysql',
+        'connections' => array(
+            'mysql' => array(
+            'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'database',
+            'username'  => 'root',
+            'password'  => '',
+        ),
+    ),
+);
+		        </code></pre>
+                </section>
+
+                <section>
+                <h2>Configuration</h2>
+                <h3>Symfony2</h3>
+                <ul>
+                    <li>YAML</li>
+                    <li>XML</li>
+                    <li>PHP</li>
+                    <li>INI</li>
+                    <li>Annotations</li>
+                </ul>
+                </section>
+
+                <section>
+                <h2>Configuration</h2>
+                <h3>Symfony2</h3>
+                <p>Default: Yaml</p>
+                <pre><code data-trim>
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: symfony
+    database_user: root
+                </code></pre>
+                </section>
+
+                <section>
+                    <h2>Routing</h2>
+                    <h3>Laravel4</h3>
+                    <p>Simple routes</p>
+                    <pre><code>
+Route::get('user/{name?}', function($name = null)
+{
+        return $name;
+});
+                    </code></pre>
+                    <pre><code>
+Route::get('user/profile', array('uses' => 'UserController@showProfile'));
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>Routing</h2>
+                    <h3>Laravel4</h3>
+                    <p>RESTful Controller</p>
+                    <pre><code data-trim>
+class UserController extends BaseController {
+    public function getIndex()
+    {
+        //
+    }
+
+    public function postProfile()
+    {
+        //
+    }
+}
+                     </code></pre>
+                     <pre><code>
+Route::controller('users', 'UserController');
+                     </code></pre>
+                </section>
+
+                <section>
+                <h2>Routing</h2>
+                <h3>Symfony2</h3>
+                <p>There are many ways...</p>
+                <ul>
+                    <li>YAML</li>
+                    <li>XML</li>
+                    <li>PHP</li>
+                    <li>Annotations</li>
+                </ul>
+                </section>
+
+                <section>
+                <h2>Routing</h2>
+                <h3>Symfony2</h3>
+                <p>YAML:</p>
+                <pre><code data-trim>
+contact_process:
+    path:     /contact
+    defaults: { _controller: AcmeDemoBundle:Main:contactProcess }
+    methods:  [POST]
+                </code></pre>
+                <p>Annotations:</p>
+                <pre><code data-trim>
+/**
+ * @Route("/", defaults={"id" = 1})
+ * @Route("/{id}")
+ */
+public function showAction($id)
+{
+}
+                </code></pre>
+                </section>
+
+                <section>
+                <h2>Security</h2>
+                <h3>Laravel4</h3>
+                <pre><code data-trim>
+if (Auth::attempt(array('email' => $email, 'password' => $password)))
+{
+    return Redirect::intended('dashboard');
+}
+                </code></pre>
+                <pre><code data-trim>
+Route::get('profile', array('before' => 'auth', function()
+{
+    // Only authenticated users may enter...
+}));
+                </code></pre>
+                <p>No authorization (roles)</p>
+                </section>
+
+                <section>
+                <h2>Security</h2>
+                <h3>Symfony2</h3>
+                <img src="img/security.png" alt=""/>
+                </section>
+
+                <section>
+                <h2>Security</h2>
+                <h3>Symfony2</h3>
+                <ul>
+                    <li>Pretty complicated to setup</li>
+                    <li>Has roles and role inheritance</li>
+                    <li>Has firewalls</li>
+                    <li>You can use FosUserBundle (or other)</li>
+                </ul>
+                </section>
+
+                <section>
+                <h2>Templating</h2>
+                <h3>Laravel3:</h3>
+                <ul>
+                    <li>Blade templating language</li>
+                    <li>PHP templates</li>
+                </ul>
+                <h3>Symfony2:</h3>
+                <ul>
+                    <li>Twig templating language</li>
+                    <li>PHP templates</li>
+                </ul>
+                </section>
+
+                <section>
+                <h3>Templating</h3>
+                <h2>Twig vs Blade</h2>
+                <ul>
+                    <li>Twig has more features</li>
+                    <li>Twig does not allow php code inside template</li>
+                </ul>
+                <p style="margin-top:20px">It is possible to use twig inside Laravel4 using <a href="https://github.com/rcrowe/TwigBridge">TwigBridge</a></p>
+                <p>It is possible to hook in other templating engines to Symfony2</p>
+                </section>
+
+                <section>
+                <h2>Forms</h2>
+                <h2>Laravel4</h2>
+                <ul>
+                    <li>Easy to get working</li>
+		            <li>Implementation can get tedious</li>
+	                <li>No form data binding to entities</li>
+                </ul>
+                </section>
+
+                <section>
+                <h2>Forms</h2>
+                <h3>Symfony2</h3>
+                <ul>
+                    <li>Very powerful form theming</li>
+                    <li>You can automate everything</li>
+                    <li>Form data automatically bound to DB entities</li>
+                    <li>Sometimes hard/impossible to do it symfony way</li>
+                    <li>Steep learning curve</li>
+                    <li>Does not play nicely with AJAX forms</li>
+                </ul>
+                </section>
+                <section>
+                <h2>Forms</h2>
+                <h3>Symfony2</h3>
+                <p style="margin-top:20px">Ideal view will look like this:</p>
+                <pre><code data-trim>
+{# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
+{% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' %}
+
+{{ form(form) }}
+                </code></pre>
+                <p style="margin-top:20px">Ideal controller will look like this:</p>
+		<pre><code data-trim>
+public function newAction(Request $request) {
+    $task = new Task();
+    $form = $this->createForm(new TaskType(), $task);
+    $form->handleRequest($request);
+    if ($form->isValid()) {
+        $this->getEntityManager()->persist($task);
+        $this->getEntityManager()->fulsh();
+        return $this->redirect($this->generateUrl('task_success'));
+    }
+    return array('form'=>form->createView());
+}
+                </code></pre>
+		        <p>But it's not easy to get there...</p>
+                </section>
+
+                <section>
+                <h2>Database</h2>
+                <h3>Laravel4</h3>
+                <p>Homebrew solution:</p>
+                <ul>
+                    <li>Plain PDO queries</li>
+                    <li>Query builder</li>
+                    <li>Eloquent ORM</li>
+                    <li>Migrations</li>
+                </ul>
+                <div class="fragment">
+                    <p style="margin-top:10px">Easy to learn</p>
+                    <p>Fallback to PDO queries is not painful</p>
+                </div>
+                </section>
+
+                <section>
+                <h2>Database</h2>
+                <h3>Symfony2</h3>
+                <p>3rd party libraries Doctrine or Propel:</p>
+                <ul>
+                    <li>Steeper learning curve</li>
+                    <li>More powerful</li>
+                    <li>Some fancy queries are impossible (Doctrine)</li>
+                    <li>Might limit your database design (Doctrine)</li>
+                </ul>
+                </section>
+
+                <section>
+                <h2>Performance</h2>
+                <p>Laravel4 is a little faster than Symfony2</p>
+                <img src="img/performance.png" alt="" />
+                <p><small>Benchmark by <a href="http://www.techempower.com/">TechEmpower</a>.
+                    Responses per second at 20 queries per request, Linux on i7
+                </small></p>
+                <p>Laravel feels much faster (no app_dev.php)</p>
+                </section>
+
+                <section>
+                <h2>Code style</h2>
+                <h3>Laravel4</h3>
+                <ul>
+                    <li>Global facades</li>
+                    <li>Imports not necessary</li>
+                    <li>Concise naming style</li>
+                </ul>
+                <pre><code>
+$name = Input::get('name', 'Sally');
+                </code></pre>
+                </section>
+
+                <section>
+                <h2>Code style</h2>
+                <h3>Symfony2</h3>
+                <ul>
+                    <li>Correct OO approach</li>
+                    <li>Imports everything, no globals</li>
+                    <li>Java-like verbose naming</li>
+                </ul>
+                <pre><code>
+$name = $this->getRequest()->get('name', 'Sally');
+                </code></pre>
+                </section>
+
+                <section>
+                <h2>Code style</h2>
+                <h2>Symfony2</h2>
+                <pre><code data-trim>
+namespace CompanyX\UserBundle\Controller;
+
+use FOS\UserBundle\Controller\RegistrationController as BaseController;
+use FOS\UserBundle\Entity\UserManager;
+use FOS\UserBundle\Form\Model\CheckPassword;
+use FOS\UserBundle\Model\UserInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
+use Imagine\Filter\Transformation;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use CompanyX\MainBundle\Form\DataTransformer\StringToNumberTransformer;
+use CompanyX\MainBundle\MpController;
+use CompanyX\ReportBundle\ReportGenerator;
+use CompanyX\UserBundle\Entity\RoleType;
+use CompanyX\UserBundle\Entity\User;
+use CompanyX\UserBundle\Entity\UserPeriod;
+use CompanyX\UserBundle\Entity\UserSalary;
+use CompanyX\UserBundle\Entity\UserSort;
+use CompanyX\UserBundle\Form\Type\CredentialsForm;
+use CompanyX\UserBundle\Form\Type\UserFormType;
+use CompanyX\UserBundle\Form\Type\UserSalaryType;
+use CompanyX\WorkBundle\DateUtils;
+use PDOException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use stdClass;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+                </code></pre>
+                </section>
+
+                <section>
+                <h2>In conclusion</h2>
+                <h3>Choose the right tool for the job!</h3>
+                </section>
+
+                <section>
+                <h2>Thank you for your attention</h2>
+                <h4 class="fragment">And don't forget to visit <b style="color:purple">WIX hackaton</b> next Saturday :)</h4>
+                </section>
+
+                <section>
+                <h1>Questions?</h1>
+                </section>
+            </div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
